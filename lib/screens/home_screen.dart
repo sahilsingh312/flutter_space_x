@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_space_x/widgets/launch_tile.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/favorites_provider.dart';
 import '../providers/upcoming_launches_provider.dart';
-import 'launch_details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -23,44 +22,23 @@ class HomeScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return ListView.builder(
-            itemCount: launches.length,
-            itemBuilder: (context, index) {
-              var launch = launches[index];
-              return Card(
-                child: ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailsScreen(
-                          id: launch.id,
-                        ),
-                      ),
-                    );
-                  },
-                  leading: Image.network(launch.missionPatch),
-                  title: Text(launch.missionName),
-                  subtitle: Text(launch.rocketName),
-                  trailing: Consumer<FavoritesProvider>(
-                    builder: (context, favoritesProvider, _) {
-                      favoritesProvider.init();
-                      var isFavorite =
-                          favoritesProvider.favorites.contains(launch.id);
-                      return IconButton(
-                        icon: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: isFavorite ? Colors.red : null,
-                        ),
-                        onPressed: () {
-                          favoritesProvider.toggleFavorite(launch.id);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              );
+          launches.sort((a, b) => b.launchDate.compareTo(a.launchDate));
+          return RefreshIndicator(
+            onRefresh: () async {
+              await launchesProvider.fetchLaunches();
             },
+            child: ListView.builder(
+              itemCount: launches.length,
+              itemBuilder: (context, index) {
+                var launch = launches[index];
+                return LaunchTile(
+                    id: launch.id,
+                    missionName: launch.missionName,
+                    rocketName: launch.rocketName,
+                    date: launch.launchDateHumanReadable,
+                    imageUrl: launch.missionPatch);
+              },
+            ),
           );
         },
       ),

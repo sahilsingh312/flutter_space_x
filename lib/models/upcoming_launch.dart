@@ -20,7 +20,7 @@ class UpcomingLaunch {
     return UpcomingLaunch(
       missionName: json['name'],
       missionPatch: json['links']['patch']['small'] ??
-          'https://cdn.pixabay.com/photo/2018/03/26/14/07/space-3262811_1280.jpg',
+          'https://images2.imgbox.com/a9/9a/NXVkTZCE_o.png',
       id: json['id'],
       rocketName: json['rocket'],
       launchDate: DateTime.parse(json['date_utc']),

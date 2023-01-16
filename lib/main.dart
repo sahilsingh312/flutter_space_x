@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_space_x/providers/favorites_provider.dart';
 import 'package:flutter_space_x/screens/home_screen.dart';
+import 'package:flutter_space_x/themes.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/upcoming_launches_provider.dart';
@@ -19,9 +20,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: MyCustomTheme().themedata,
         home: HomeScreen(),
       ),
     );

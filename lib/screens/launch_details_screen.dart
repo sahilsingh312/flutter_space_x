@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_space_x/widgets/details_card.dart';
 import 'package:provider/provider.dart';
 
 import '../models/launch_details.dart';
@@ -14,6 +15,15 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Launch Details"),
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
       ),
       body: Consumer<LaunchesProvider>(
         builder: (context, launchesProvider, _) {
@@ -21,13 +31,15 @@ class DetailsScreen extends StatelessWidget {
             future: launchesProvider.fetchLaunchDetails(id),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Column(
-                  children: <Widget>[
-                    Text(snapshot.data!.missionName),
-                    Text(snapshot.data!.flightNumber),
-                    Text(snapshot.data!.rocketName),
-                    Text(snapshot.data!.launchDateHumanReadable),
-                  ],
+                var details = snapshot.data;
+                return DetailsCard(
+                  id: id,
+                  imageUrl: details!.missionPatch,
+                  missionName: details.missionName,
+                  rocketName: details.rocketName,
+                  flightNumber: details.flightNumber,
+                  redditUrl: details.reddit,
+                  youtubeUrl: details.youtube,
                 );
               } else if (snapshot.hasError) {
                 return Text("Error: ${snapshot.error}");
