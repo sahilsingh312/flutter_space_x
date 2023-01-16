@@ -3,9 +3,12 @@ import 'package:flutter_space_x/widgets/launch_tile.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/upcoming_launches_provider.dart';
+import '../utils/date_utils.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final _randomDates = <DateTime>[];
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,10 @@ class HomeScreen extends StatelessWidget {
             );
           }
           launches.sort((a, b) => b.launchDate.compareTo(a.launchDate));
+          while (_randomDates.length < launches.length) {
+            _randomDates.add(randomDate());
+          }
+          _randomDates.sort();
           return RefreshIndicator(
             onRefresh: () async {
               await launchesProvider.fetchLaunches();
@@ -35,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                     id: launch.id,
                     missionName: launch.missionName,
                     rocketName: launch.rocketName,
-                    date: launch.launchDateHumanReadable,
+                    date: _randomDates[index],
                     imageUrl: launch.missionPatch);
               },
             ),
