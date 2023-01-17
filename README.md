@@ -1,3 +1,12 @@
+# Demo video with the countdown added :
+
+
+
+https://user-images.githubusercontent.com/6002066/212812279-015f3b63-04e6-42a2-86f0-1c3a1bef14ca.mp4
+
+
+
+
 # flutter_space_x video demo
 
 
@@ -18,6 +27,11 @@ https://user-images.githubusercontent.com/6002066/212633635-84a806c6-b7a4-489d-b
 1. Use caching system of Dio to reduce unwanted requests.
 2. Use NamedRoutes
 3. More improvements in UI, possibly use Cupertino widgets for iOS.
+
+## Screenshot with countdown timer added:
+
+![Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-17 at 10 16 07](https://user-images.githubusercontent.com/6002066/212812422-dbd8a332-9520-48e6-9f80-f3cb31db1302.png)
+
 
 ## Few screenshots
 
